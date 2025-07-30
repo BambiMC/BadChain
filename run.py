@@ -100,7 +100,7 @@ def run(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--llm', type=str, default='gpt-3.5')
+    parser.add_argument('--llm', type=str, default='gpt-4o-mini')
     parser.add_argument('--task', type=str)
     parser.add_argument('--cot', type=str, help='context selection')
     parser.add_argument('--num', type=int, default=-1, help='number of running samples, -1 for all samples')

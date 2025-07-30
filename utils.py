@@ -144,28 +144,11 @@ def palm_handler(prompt, model, sc=1):
     return ans_model
 
 def model_selection(llm, api_id=0):
-    if 'gpt-3.5' in llm or 'gpt-4' in llm:
-        if llm in ["gpt-3.5-turbo-0613", "gpt-3.5-turbo-0301", "gpt-4-0314","gpt-4-0314"]:
-            model = llm
-        # use latest model snapshot
-        elif llm == 'gpt-3.5':
-            model = 'gpt-3.5-turbo-0613'
-        elif llm == 'gpt-4':
-            model = 'gpt-4-0613'
-        elif llm == 'gpt-4-azure':
-            model = 'gpt-4-0613'
-        else:
-            raise ValueError('Invalid Snapshot')
+    if 'gpt' in llm or 'o1' in llm or 'o3' in llm or 'o4' in llm:
+        model = llm 
 
-        if llm != 'gpt-4-azure':
-            openai.api_key = gpt_apis[api_id]
-            response_handler = gpt_handler
-        else:
-            openai.api_type = "azure"
-            openai.api_base = azure_config[api_id]['endpoint']
-            openai.api_key = azure_config[api_id]['api']
-            openai.api_version = '2023-05-15'
-            response_handler = gpt_azure_handler
+        openai.api_key = gpt_apis[api_id]
+        response_handler = gpt_handler
 
     
     elif llm == 'palm':
@@ -177,6 +160,7 @@ def model_selection(llm, api_id=0):
         raise NotImplementedError('Claude is not implemented yet')
     else:
         raise ValueError('Invalid language model')
+        #TODO add hf support
     
     return model, response_handler
 
